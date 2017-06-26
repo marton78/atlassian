@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  database:
+    container_name: atlassian-database
+    image: postgres:9.5-alpine
+    restart: always
+    volumes:
+      - /srv/atlassian/database:/var/lib/postgresql/data
+
+  jira:
+    build: jira
+    container_name: atlassian-jira
+    restart: always
+    links:
+      - database
+    volumes:
+      - /srv/atlassian/jira:/var/atlassian/jira
+    environment:
+      - 'CATALINA_OPTS=-Xms512m -Xmx3g'
+      - 'X_PROXY_NAME=jira.example.com'
+      - 'X_PROXY_PORT=443'
+      - 'X_PROXY_SCHEME=https'
+
+  confluence:
+    build: confluence
+    container_name: atlassian-confluence
+    restart: always
+    links:
+      - database
+    volumes:
+      - /srv/atlassian/confluence:/var/atlassian/confluence
+    environment:
+      - 'CATALINA_OPTS=-Xms512m -Xmx2g'
+      - 'X_PROXY_NAME=confluence.example.com'
+      - 'X_PROXY_PORT=443'
+      - 'X_PROXY_SCHEME=https'
+
