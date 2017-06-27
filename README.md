@@ -16,21 +16,22 @@ adduser  --uid 2001 --system --no-create-home --ingroup confluence confluence
 ## Create the volumes
 
 ```
-mkdir /srv
-chmod 0777 /srv
+mkdir -p /srv/atlassian
+chmod 777 /srv/atlassian
 
-mkdir /srv/jira
-chown jira:jira /srv/jira
-chmod 0700 /srv/jira
+mkdir /srv/atlassian/jira
+chown jira:jira /srv/atlassian/jira
+chmod 700 /srv/atlassian/jira
 
-mkdir /srv/confluence
-chown confluence:confluence /srv/confluence
-chmod 0700 /srv/confluence
+mkdir /srv/atlassian/confluence
+chown confluence:confluence /srv/atlassian/confluence
+chmod 700 /srv/atlassian/confluence
 ```
 
 ## Start up the containers
 
 ```
+docker build base -t atlassian_base
 docker-compose build
 docker-compose up -d
 ```
