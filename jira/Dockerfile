@@ -1,14 +1,11 @@
-# FROM anapsix/alpine-java:8
-FROM openjdk:8-jre-alpine
+FROM atlassian_base:latest
 
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
 
-# Install Atlassian JIRA and helper tools and setup initial home
-# directory structure.
+# Install and setup initial home directory structure.
 RUN set -x \
-    && apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository http://dl-cdn.alpinelinux.org/alpine/edge/community add coreutils sed bash curl tar xmlstarlet tomcat-native \
     && addgroup -g 2000 jira \
     && adduser  -u 2000 -S -G jira jira \
     && mkdir -p                "${JIRA_HOME}" \

@@ -1,13 +1,11 @@
-FROM openjdk:8-jre-alpine
+FROM atlassian_base:latest
 
 # Configuration variables.
 ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 
-# Install Atlassian JIRA and helper tools and setup initial home
-# directory structure.
+# Install and setup initial home directory structure.
 RUN set -x \
-    && apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository http://dl-cdn.alpinelinux.org/alpine/edge/community add coreutils sed bash curl tar xmlstarlet tomcat-native \
     && addgroup -g 2001 conf \
     && adduser  -u 2001 -S -G conf conf \
     && mkdir -p                "${CONF_HOME}" \
