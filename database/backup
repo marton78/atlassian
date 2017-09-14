@@ -12,7 +12,7 @@ git init .
 git config user.email "git-postgres-backup@nowhere"
 git config user.name "Git Postgres Backup"
 git add -A .
-git commit -m ${1:-update}
+git commit -m "${1:-update}"
 
 rm -f *.sql
 
