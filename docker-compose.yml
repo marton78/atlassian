@@ -16,13 +16,12 @@ services:
     restart: always
     links:
       - database
+    ports:
+      - "8080:8080" 
     volumes:
       - /srv/atlassian/jira:/var/atlassian/jira
-    environment:
-      - 'CATALINA_OPTS=-Xms512m -Xmx3g'
-      - 'X_PROXY_NAME=jira.example.com'
-      - 'X_PROXY_PORT=443'
-      - 'X_PROXY_SCHEME=https'
+    env_file:
+      - jira.env
 
   confluence:
     build: confluence
@@ -30,11 +29,10 @@ services:
     restart: always
     links:
       - database
+    ports:
+      - "8090:8090"
     volumes:
       - /srv/atlassian/confluence:/var/atlassian/confluence
-    environment:
-      - 'CATALINA_OPTS=-Xms512m -Xmx2g'
-      - 'X_PROXY_NAME=confluence.example.com'
-      - 'X_PROXY_PORT=443'
-      - 'X_PROXY_SCHEME=https'
+    env_file:
+      - confluence.env
 
