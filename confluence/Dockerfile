@@ -12,9 +12,9 @@ RUN set -x \
     && chmod -R 700            "${CONF_HOME}" \
     && chown -R conf:conf      "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf/Catalina" \
-    && curl -Ls                "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.3.3.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
-    && find                    "${CONF_INSTALL}/confluence/WEB-INF/lib" -name "postgres*.jar" -delete \
-    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
+    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.3.3.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
+    && find                    "${CONF_INSTALL}/confluence/WEB-INF/lib" -name 'postgres*.jar' -print -delete \
+    && curl -L                 "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
