@@ -6,16 +6,16 @@ ENV JIRA_INSTALL  /opt/atlassian/jira
 
 # Install and setup initial home directory structure.
 RUN set -x \
-    && addgroup -g 2000 jira \
-    && adduser  -u 2000 -S -G jira jira \
+    && addgroup --gid 2000 jira \
+    && adduser  --system --uid 2000 --gid 2000 jira \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
     && chmod -R 700            "${JIRA_HOME}" \
     && chown -R jira:jira      "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL}/conf/Catalina" \
-    && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.4.1.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -Ls                "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.4.3.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
     && find                    "${JIRA_INSTALL}/lib" -name "postgres*.jar" -delete \
-    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.1.3.jar" -o "${JIRA_INSTALL}/lib/postgresql.jar" \
+    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${JIRA_INSTALL}/lib/postgresql.jar" \
     && chmod -R 700            "${JIRA_INSTALL}/conf" \
     && chmod -R 700            "${JIRA_INSTALL}/logs" \
     && chmod -R 700            "${JIRA_INSTALL}/temp" \
@@ -24,7 +24,6 @@ RUN set -x \
     && chown -R jira:jira      "${JIRA_INSTALL}/logs" \
     && chown -R jira:jira      "${JIRA_INSTALL}/temp" \
     && chown -R jira:jira      "${JIRA_INSTALL}/work" \
-    && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 

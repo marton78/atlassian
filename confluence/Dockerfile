@@ -6,15 +6,15 @@ ENV CONF_INSTALL  /opt/atlassian/confluence
 
 # Install and setup initial home directory structure.
 RUN set -x \
-    && addgroup -g 2001 conf \
-    && adduser  -u 2001 -S -G conf conf \
+    && addgroup --gid 2001 conf \
+    && adduser  --system --uid 2001 --gid 2001 conf \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown -R conf:conf      "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf/Catalina" \
-    && curl -Ls                "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.3.1.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -Ls                "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.3.3.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
     && find                    "${CONF_INSTALL}/confluence/WEB-INF/lib" -name "postgres*.jar" -delete \
-    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.1.3.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
+    && curl -Ls                "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
