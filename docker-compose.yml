@@ -31,6 +31,7 @@ services:
       - database
     ports:
       - "8090:8090"
+      - "8091:8091"
     volumes:
       - /srv/atlassian/confluence:/var/atlassian/confluence
     env_file:
