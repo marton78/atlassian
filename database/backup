@@ -11,6 +11,7 @@ psql -qtA -U postgres -c "${CMD}" | xargs -I DB pg_dump -U postgres -f DB.sql DB
 git init .
 git config user.email "git-postgres-backup@nowhere"
 git config user.name "Git Postgres Backup"
+git config pager.log cat
 git add -A .
 git commit -m "${1:-update}"
 
