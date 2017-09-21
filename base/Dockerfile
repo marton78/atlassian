@@ -14,6 +14,7 @@ RUN set -x \
     \
     && apt-get install --yes --no-install-recommends curl xmlstarlet \
     && apt-get install --yes --no-install-recommends -t jessie-backports libtcnative-1 \
+    && ln -s /usr/lib/x86_64-linux-gnu/libtcnative-1.so /usr/lib/ \
     \
     && rm -rf /var/cache/oracle-jdk8-installer \
     && apt-get clean \
