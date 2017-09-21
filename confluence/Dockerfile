@@ -33,8 +33,10 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
+        --insert               "Server/Service" -t elem -n 'Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on"' \
                                "${CONF_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
+
 
 # Use a specified service account
 USER conf:conf
