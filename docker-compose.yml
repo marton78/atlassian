@@ -37,3 +37,16 @@ services:
     env_file:
       - confluence.env
 
+  bitbucket:
+    build: bitbucket
+    container_name: atlassian-bitbucket
+    restart: always
+    links:
+      - database
+    ports:
+      - "7990:7990"
+      - "7999:7999"
+    volumes:
+      - /srv/atlassian/bitbucket:/var/atlassian/bitbucket
+    env_file:
+      - bitbucket.env

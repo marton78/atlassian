@@ -11,6 +11,8 @@ addgroup --gid 2000 jira
 adduser  --uid 2000 --system --no-create-home --ingroup jira jira
 addgroup --gid 2001 confluence
 adduser  --uid 2001 --system --no-create-home --ingroup confluence confluence
+addgroup --gid 2002 bitbucket
+adduser  --uid 2002 --system --no-create-home --ingroup bitbucket bitbucket
 ```
 
 ## Create the volumes
@@ -26,6 +28,10 @@ chmod 700 /srv/atlassian/jira
 mkdir /srv/atlassian/confluence
 chown confluence:confluence /srv/atlassian/confluence
 chmod 700 /srv/atlassian/confluence
+
+mkdir /srv/atlassian/bitbucket
+chown bitbucket:bitbucket /srv/atlassian/bitbucket
+chmod 700 /srv/atlassian/bitbucket
 ```
 
 ## Start up the containers
@@ -47,6 +53,8 @@ createdb -e -U postgres -E UNICODE -l C -T template0 -O jira jira
 createuser -e -U postgres -P confluence
 createdb -e -U postgres -E UNICODE -l C -T template0 -O confluence confluence
 
+createuser -e -U postgres -P bitbucket
+createdb -e -U postgres -E UNICODE -l C -T template0 -O bitbucket bitbucket
 ```
 
 
