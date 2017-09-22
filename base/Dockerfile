@@ -1,24 +1,16 @@
-FROM debian:jessie
-MAINTAINER Marton Danoczy <marton78@gmail.com>
+# Image for building Tomcat Native
+FROM anapsix/alpine-java:8_jdk_unlimited
+RUN apk add --no-cache openssl-dev apr-dev libc-dev gcc make curl tar \
+    && curl -L http://archive.apache.org/dist/tomcat/tomcat-connectors/native/1.2.14/source/tomcat-native-1.2.14-src.tar.gz \
+     | tar -xz --directory ~ --strip-components=1 --no-same-owner \
+    && cd ~/native \
+    && ./configure && make \
+    && cp .libs/libtcnative-1.so.0.2.14 /libtcnative-1.so
 
+# Atlassian base image 
+FROM anapsix/alpine-java:8_server-jre_unlimited
 RUN set -x \
-    && echo "deb http://ftp.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list \
-    && echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > /etc/apt/sources.list.d/webupd8team-java.list \
-    && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list.d/webupd8team-java.list \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 \
-    && apt-get update \
-    \
-    && echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
-    && echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections \
-    && DEBIAN_FRONTEND=noninteractive  apt-get install -y --force-yes oracle-java8-installer oracle-java8-set-default \
-    \
-    && apt-get install --yes --no-install-recommends curl xmlstarlet \
-    && apt-get install --yes --no-install-recommends -t jessie-backports libtcnative-1 \
-    && ln -s /usr/lib/x86_64-linux-gnu/libtcnative-1.so /usr/lib/ \
-    \
-    && rm -rf /var/cache/oracle-jdk8-installer \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-CMD ["/bin/bash"]
-
+    && apk --no-cache add coreutils sed bash curl tar apr openssl \
+    && apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.6/main \
+                      --repository http://dl-cdn.alpinelinux.org/alpine/v3.6/community add xmlstarlet
+COPY --from=0 /libtcnative-1.so /usr/lib

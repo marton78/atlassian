@@ -6,8 +6,8 @@ ENV CONF_INSTALL  /opt/atlassian/confluence
 
 # Install and setup initial home directory structure.
 RUN set -x \
-    && addgroup --gid 2001 conf \
-    && adduser  --system --uid 2001 --gid 2001 conf \
+    && addgroup -g 2001 conf \
+    && adduser  -u 2001 -S -G conf conf \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown -R conf:conf      "${CONF_HOME}" \

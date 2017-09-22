@@ -6,8 +6,8 @@ ENV JIRA_INSTALL  /opt/atlassian/jira
 
 # Install and setup initial home directory structure.
 RUN set -x \
-    && addgroup --gid 2000 jira \
-    && adduser  --system --uid 2000 --gid 2000 jira \
+    && addgroup -g 2000 jira \
+    && adduser  -u 2000 -S -G jira jira \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
     && chmod -R 700            "${JIRA_HOME}" \
