@@ -3,11 +3,19 @@ version: '3'
 services:
 
   database:
-    build: database
+    image: postgres:9.6-alpine
     container_name: atlassian-database
     restart: always
     volumes:
       - /srv/atlassian/database:/var/lib/postgresql/data
+
+  backup:
+    build: backup
+    container_name: atlassian-backup
+    restart: always
+    links:
+      - database
+    volumes:
       - /srv/atlassian/db-backup:/root/backup
 
   jira:
