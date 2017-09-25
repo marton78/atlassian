@@ -5,7 +5,7 @@ cd /root/backup
 
 rm -f *.sql
 CMD="SELECT datname FROM pg_database WHERE NOT datistemplate AND datname != 'postgres';"
-psql -qtA -U postgres -c "${CMD}" | xargs -I DB pg_dump -U postgres -f DB.sql DB
+psql -qtA -h database -U postgres -c "${CMD}" | xargs -I DB pg_dump -h database -U postgres -f DB.sql DB
 
 git init .
 git config user.email "git-postgres-backup@nowhere"
