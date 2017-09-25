@@ -4,6 +4,7 @@ mkdir -p /root/backup
 cd /root/backup
 
 rm -f *.sql
+pg_dumpall --globals-only -h database -U postgres -f globals-only.sql
 CMD="SELECT datname FROM pg_database WHERE NOT datistemplate AND datname != 'postgres';"
 psql -qtA -h database -U postgres -c "${CMD}" | xargs -I DB pg_dump -h database -U postgres -f DB.sql DB
 
