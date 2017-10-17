@@ -12,7 +12,7 @@ RUN set -x \
     && chmod -R 700            "${CONF_HOME}" \
     && chown -R conf:conf      "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf/Catalina" \
-    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.4.1.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.4.2.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
     && find                    "${CONF_INSTALL}/confluence/WEB-INF/lib" -name 'postgres*.jar' -print -delete \
     && curl -L                 "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \

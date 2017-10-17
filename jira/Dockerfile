@@ -13,7 +13,7 @@ RUN set -x \
     && chmod -R 700            "${JIRA_HOME}" \
     && chown -R jira:jira      "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL}/conf/Catalina" \
-    && curl -L                 "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.5.0.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -L                 "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.5.1.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
     && find                    "${JIRA_INSTALL}/lib" -name 'postgres*.jar' -print -delete \
     && curl -L                 "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${JIRA_INSTALL}/lib/postgresql.jar" \
     && chmod -R 700            "${JIRA_INSTALL}/conf" \

@@ -14,7 +14,7 @@ RUN set -x \
     && update-ca-certificates \
     && rm -rf      /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/* \
     && mkdir -p    "${BITBUCKET_INSTALL}" \
-    && curl -L     "https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-5.4.0.tar.gz" \
+    && curl -L     "https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-5.4.1.tar.gz" \
                    | tar -xz --strip-components=1 -C "${BITBUCKET_INSTALL}" \
     && find        "${BITBUCKET_INSTALL}/app/WEB-INF/lib" -name 'postgres*.jar' -print -delete \
     && curl -L     "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${BITBUCKET_INSTALL}/app/WEB-INF/lib/postgresql.jar" \
