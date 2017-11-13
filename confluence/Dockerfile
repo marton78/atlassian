@@ -6,13 +6,14 @@ ENV CONF_INSTALL  /opt/atlassian/confluence
 
 # Install and setup initial home directory structure.
 RUN set -x \
+    && apk --no-cache add      "graphviz" \
     && addgroup -g 2001 conf \
     && adduser  -u 2001 -S -G conf conf \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown -R conf:conf      "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf/Catalina" \
-    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.4.2.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.5.0.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
     && find                    "${CONF_INSTALL}/confluence/WEB-INF/lib" -name 'postgres*.jar' -print -delete \
     && curl -L                 "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
@@ -37,6 +38,7 @@ RUN set -x \
                                "${CONF_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
 
+RUN apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.6/main add graphviz
 
 # Use a specified service account
 USER conf:conf
