@@ -58,3 +58,18 @@ services:
       - /srv/atlassian/bitbucket:/var/atlassian/bitbucket
     env_file:
       - bitbucket.env
+
+  bamboo:
+    build: bamboo
+    container_name: atlassian-bamboo
+    restart: always
+    links:
+      - database
+    ports:
+      - "8085:8085"
+      - "54663:54663"
+    volumes:
+      - /srv/atlassian/bamboo:/var/atlassian/bamboo
+    env_file:
+      - bamboo.env
+
