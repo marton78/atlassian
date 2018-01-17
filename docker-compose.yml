@@ -2,6 +2,17 @@ version: '3'
 
 services:
 
+  subversion:
+    build: subversion
+    container_name: subversion
+    restart: always
+    ports:
+      - "8070:80"
+    volumes:
+      - /srv/subversion:/var/svn
+    env_file:
+      - subversion.env
+
   database:
     image: postgres:9.6-alpine
     container_name: atlassian-database
