@@ -10,7 +10,7 @@ ServerName "$SERVER_NAME"
 <Location />
   DAV svn
   SVNParentPath /var/svn
-  #AuthzSVNAccessFile /var/svn/users.authz
+  AuthzSVNAccessFile /var/svn/users.authz
   AuthType Basic
   AuthBasicProvider ldap
   AuthName "Subversion server"
