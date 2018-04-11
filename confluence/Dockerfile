@@ -13,9 +13,9 @@ RUN set -x \
     && chmod -R 700            "${CONF_HOME}" \
     && chown -R conf:conf      "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf/Catalina" \
-    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.5.0.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -L                 "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-6.6.3.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
     && find                    "${CONF_INSTALL}/confluence/WEB-INF/lib" -name 'postgres*.jar' -print -delete \
-    && curl -L                 "https://jdbc.postgresql.org/download/postgresql-42.1.4.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
+    && curl -L                 "https://jdbc.postgresql.org/download/postgresql-42.2.2.jar" -o "${CONF_INSTALL}/confluence/WEB-INF/lib/postgresql.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
@@ -37,8 +37,6 @@ RUN set -x \
         --insert               "Server/Service" -t elem -n 'Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on"' \
                                "${CONF_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
-
-RUN apk --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.6/main add graphviz
 
 # Use a specified service account
 USER conf:conf
