@@ -12,7 +12,7 @@ if [ -z "$2" ]; then
 fi
 
 set -e -x
-pg_dump -h database -U postgres -c -f ${1}.bak ${1}
+pg_dump -h database -U postgres -f ${1}.bak ${1}
 git checkout "${2}" -- ${1}.sql
 dropdb -h database -U postgres ${1}
 createdb -e -h database -U postgres -E UNICODE -l C -T template0 -O ${1} ${1}
