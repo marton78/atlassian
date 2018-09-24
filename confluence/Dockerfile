@@ -38,6 +38,16 @@ RUN set -x \
                                "${CONF_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
 
+# Disable the 'Remember Me' feature in Confluence
+# https://confluence.atlassian.com/confkb/how-to-disable-the-remember-me-feature-in-confluence-118686062.html
+#
+# Disable Autocomplete Password in Browser for Confluence
+# https://community.atlassian.com/t5/Confluence-questions/Need-to-disable-Autocomplete-Password-in-Browser-for-Confluence/qaq-p/110523
+RUN sed -i '/remember.accesskey/d' ${CONF_INSTALL}/confluence/login.vm \
+    && sed -i 's/"name='\''os_password'\''"/"name='\''os_password'\''" "autocomplete='\''off'\''"/g' ${CONF_INSTALL}/confluence/login.vm \
+    && sed -i 's/<session-timeout>60<\/session-timeout>/<session-timeout>10<\/session-timeout>/g' ${CONF_INSTALL}/confluence/WEB-INF/web.xml
+
+
 # Use a specified service account
 USER conf:conf
 
